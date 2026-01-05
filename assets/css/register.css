@@ -1,0 +1,203 @@
+/* ================= MAIN LAYOUT ================= */
+main {
+  display: flex;
+  position: relative;
+  margin: auto;
+  top: 50%;
+  transform: translateY(-50%);
+  justify-content: center;
+  height: 100%;
+  padding: 50px;
+  max-width: 1500px;
+  max-height: 750px;
+  flex-direction: row-reverse;
+  user-select: none;
+  background: #0b0b0b;
+}
+
+/* ================= CONTAINER ================= */
+.main {
+  width: 100%;
+  display: inline-block;
+}
+
+/* ================= IMAGE ================= */
+.img {
+  width: 100%;
+  display: inline-block;
+  background-image: url(/assets/img/register-bg.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  border-radius: 18px;
+  box-shadow:
+    0 0 40px rgba(0, 0, 0, 0.6),
+    inset 0 0 40px rgba(0, 0, 0, 0.6);
+}
+
+.main *,
+.img * {
+  max-width: 100%;
+}
+
+/* ================= BUTTON ================= */
+.main .btn {
+  width: 100%;
+  max-width: 300px;
+  margin: auto;
+}
+
+.main .btn button {
+  width: 100%;
+  margin-top: 10px;
+  color: #f5c542;
+  background: transparent;
+  padding: 8px;
+  border-radius: 12px;
+  border: 1px solid rgba(245, 197, 66, 0.45);
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.main .btn button:hover {
+  background: rgba(245, 197, 66, 0.1);
+  box-shadow: 0 0 15px rgba(245, 197, 66, 0.45);
+}
+
+.main .btn button:active {
+  background: #f5c542;
+  color: #000;
+}
+
+.main .btn button:disabled {
+  border-color: rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.4);
+  cursor: not-allowed;
+}
+
+/* ================= FORM ================= */
+.main .form {
+  height: fit-content;
+  margin: auto;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* ================= TURNSTILE ================= */
+.main .form .cf-turnstile {
+  width: 100%;
+  max-width: 300px;
+  margin: 10px auto 0;
+}
+
+/* ================= INPUT ================= */
+.main .form .inp {
+  margin: 10px auto 0;
+  width: 100%;
+  max-width: 300px;
+}
+
+.main .form .inp input {
+  width: 100%;
+  color: #ffffff;
+  background: transparent;
+  padding: 8px 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(245, 197, 66, 0.35);
+  transition: 0.3s;
+}
+
+.main .form .inp input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.main .form .inp input:focus {
+  outline: none;
+  border-color: #f5c542;
+  box-shadow: 0 0 12px rgba(245, 197, 66, 0.5);
+}
+
+/* ================= PASSWORD ================= */
+.main .form .passwd {
+  display: flex;
+  gap: 6px;
+}
+
+.main .form .passwd button {
+  color: #f5c542;
+  background: transparent;
+  padding: 6px 8px;
+  border-radius: 12px;
+  border: 1px solid rgba(245, 197, 66, 0.45);
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.main .form .passwd button:hover {
+  box-shadow: 0 0 12px rgba(245, 197, 66, 0.4);
+}
+
+.main .form .passwd button:active {
+  background: #f5c542;
+  color: #000;
+}
+
+.main .form .passwd button:disabled {
+  border-color: rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* ================= SUBMIT ================= */
+.main .form .submit {
+  width: 100%;
+  max-width: 300px;
+  margin: 10px auto 0;
+}
+
+.main .form .submit input {
+  width: 100%;
+  color: #f5c542;
+  background: rgba(245, 197, 66, 0.08);
+  padding: 8px;
+  border-radius: 12px;
+  border: 1px solid rgba(245, 197, 66, 0.45);
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.main .form .submit input:hover {
+  box-shadow: 0 0 18px rgba(245, 197, 66, 0.5);
+}
+
+.main .form .submit input:active {
+  background: #f5c542;
+  color: #000;
+}
+
+.main .form .submit input:disabled {
+  border-color: rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.4);
+  background: transparent;
+}
+
+/* ================= ERROR ================= */
+.main .form .error {
+  padding: 8px;
+  text-align: center;
+  width: 100%;
+  max-width: 300px;
+  margin: 10px auto 0;
+  border-radius: 12px;
+  border: 1px solid rgba(180, 0, 0, 0.6);
+  background: rgba(180, 0, 0, 0.15);
+  color: #ffb3b3;
+  word-break: break-word;
+}
+
+/* ================= RESPONSIVE ================= */
+@media only screen and (max-width: 1000px) {
+  .img {
+    display: none;
+  }
+}

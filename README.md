@@ -4,7 +4,7 @@
 <img src="https://img.shields.io/badge/Codename-novaya_veshsh-0000aa.svg"></img>
 </div>
 
-# Cập nhật lớn: v1.0 (novaya veshsh)
+# Cập nhật lớn: v1.0 (truhosttaivietnammrbeeder)
 > Làm mới toàn bộ hệ thống!
 
 # Nhật ký thay đổi: v1.0.1

@@ -1,0 +1,176 @@
+main {
+  padding: 20px;
+  opacity: 0;
+}
+
+/* ===== TITLE ===== */
+main .title * {
+  font-weight: 100;
+  user-select: none;
+}
+
+main .title button {
+  float: right;
+  width: 100px;
+  color: #f5e6b3;
+  background: transparent;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(212,175,55,0.5);
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+main .title button:hover {
+  border-color: #f5c84c;
+}
+
+main .title button:active {
+  background-color: rgba(212,175,55,0.25);
+}
+
+/* ===== SERVER LIST ===== */
+main .sv {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+main .sv a {
+  width: 100%;
+}
+
+main .sv .sio {
+  padding: 15px;
+  color: #f5e6b3;
+  background: rgba(212,175,55,0.06);
+  box-shadow: 0 8px 30px rgba(212,175,55,0.12);
+  border-radius: 16px;
+  border: 1px solid rgba(212,175,55,0.25);
+  width: 100%;
+  min-width: 250px;
+  max-width: 300px;
+}
+
+main .sv .sio * {
+  font-weight: 100;
+}
+
+main .sv .sio .info {
+  display: flex;
+  justify-content: space-between;
+}
+
+main .sv .sio .btn {
+  display: flex;
+  gap: 5px;
+}
+
+main .sv .sio .btn button {
+  width: 100%;
+  color: #f5e6b3;
+  background: transparent;
+  padding: 6px;
+  border-radius: 10px;
+  border: 1px solid rgba(212,175,55,0.45);
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+main .sv .sio .btn button:hover {
+  border-color: #f5c84c;
+}
+
+main .sv .sio .btn button:active {
+  background-color: rgba(212,175,55,0.25);
+}
+
+/* ===== CREATE SERVER POPUP ===== */
+.crSp {
+  position: fixed;
+  inset: 0;
+  z-index: 9;
+  background-color: rgba(0,0,0,0.85);
+  backdrop-filter: blur(6px);
+  padding: 10px;
+}
+
+.crSp .form {
+  max-width: 500px;
+  margin: auto;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #f5e6b3;
+  background: rgba(212,175,55,0.08);
+  box-shadow: 0 10px 40px rgba(212,175,55,0.2);
+  border-radius: 16px;
+  border: 1px solid rgba(212,175,55,0.35);
+  padding: 15px;
+}
+
+/* ===== INPUT ===== */
+.crSp input,
+.crSp select,
+main .isv input {
+  width: 100%;
+  color: #f5e6b3;
+  background: transparent;
+  padding: 7px;
+  border-radius: 10px;
+  border: 1px solid rgba(212,175,55,0.45);
+  transition: 0.3s;
+}
+
+.crSp input:focus,
+.crSp select:focus,
+main .isv input:focus {
+  border-color: #f5c84c;
+  outline: none;
+}
+
+/* ===== BUTTON ===== */
+.crSp .btn input,
+main .isv .btn button:not(.del) {
+  color: #f5e6b3;
+  background: transparent;
+  border: 1px solid rgba(212,175,55,0.5);
+  border-radius: 10px;
+  padding: 7px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.crSp .btn input:hover,
+main .isv .btn button:not(.del):hover {
+  border-color: #f5c84c;
+}
+
+.crSp .btn input:active,
+main .isv .btn button:not(.del):active {
+  background-color: rgba(212,175,55,0.25);
+}
+
+/* ===== DELETE BUTTON ===== */
+main .isv .btn button.del {
+  border: 1px solid rgba(200,60,60,0.6);
+  color: #ffb3b3;
+}
+
+main .isv .btn button.del:hover {
+  border-color: #ff4d4d;
+  background-color: rgba(255,80,80,0.25);
+}
+
+/* ===== STATUS ===== */
+main .err {
+  background: rgba(200,60,60,0.2);
+  border: 1px solid rgba(200,60,60,0.4);
+}
+
+main .done {
+  background: rgba(212,175,55,0.2);
+  border: 1px solid rgba(212,175,55,0.4);
+  color: #f5e6b3;
+}

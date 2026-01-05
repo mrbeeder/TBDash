@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+    <link rel="stylesheet" href="/assets/css/general.css">
+    <link rel="stylesheet" href="/assets/css/dash_css.css">
+    <link rel="stylesheet" href="/assets/css/dash.css">
+    
+    <link rel="shortcut icon" href="/assets/img/logo.png" type="image/png">
+
+    <script>
+        document.onreadystatechange = function() {
+            if (document.readyState == 'complete') {
+                $(".loading").fadeOut(200);
+                $("body").css("overflow-y","unset");
+                $("main").delay(300).css("animation", "showing 0.5s forwards ease-in-out");
+                document.onreadystatechange = () => {}
+            }
+        };
+    </script>
+
+    <script src="/assets/js/dash.js"></script>
+
+    <title>Bảng Điều Khiển - {{name}}</title>
+</head>
+<body>
+    <div class="loading">
+        <div class="loader"></div>
+    </div>
+
+    <!-- THANH ĐIỀU HƯỚNG -->
+    <div class="nav">
+        <div class="name">{{name}}</div>
+        <div class="items">
+            <a onclick="sh()">
+                <div id="menuToggle" class="it">
+                    <div class="icon"><i class="fa-solid fa-bars"></i></div>
+                    <it>Ẩn menu</it>
+                </div>
+            </a>
+
+            {% for i in list(mIt.keys()) %}
+            <a href="{{mIt[i]['link']}}" {% if request.path.replace('/','') == mIt[i]['link'].replace('/','') %} class="sp" {% endif %}>
+                <div class="it">
+                    <div class="icon">{{mIt[i]["icon"] | safe}}</div>
+                    <it>{{i}}</it>
+                </div>
+            </a>
+            {% endfor %}
+
+            <a href="/panel" target="_blank">
+                <div class="it">
+                    <div class="icon"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+                    <it>Bảng điều khiển</it>
+                </div>
+            </a>
+
+            {% if isAdmin %}
+            <a href="/admin">
+                <div class="it">
+                    <div class="icon"><i class="fa-solid fa-lock"></i></div>
+                    <it>Bảng quản trị</it>
+                </div>
+            </a>
+            {% endif %}
+        </div>
+
+        <div class="users">
+            <div class="one">
+                <h5>{{user}}</h5>
+                <h6>Xu: {{coin}}</h6>
+            </div>
+            <div class="two">
+                <button onclick="window.location='/logout'">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- NỘI DUNG CHÍNH -->
+    <div class="main">
+        <main>
+            <div class="welcome">
+                <h2>{{bigWel}}</h2>
+                <h4>{{smallWel}}</h4>
+            </div>
+
+            <div class="info">
+                <div class="item">
+                    <div class="name">CPU: {{int(cpu)}}% / {{dcpu}}%</div>
+                    <div class="i"><div class="f" style="width: {{max(0, min((cpu/dcpu)*100, 100))}}%"></div></div>
+                </div>
+                <div class="item">
+                    <div class="name">RAM: {{int(ram)}}MB / {{dram}}MB</div>
+                    <div class="i"><div class="f" style="width: {{max(0, min((ram/dram)*100, 100))}}%"></div></div>
+                </div>
+                <div class="item">
+                    <div class="name">Ổ cứng: {{int(disk)}}MB / {{ddisk}}MB</div>
+                    <div class="i"><div class="f" style="width: {{max(0, min((disk/ddisk)*100, 100))}}%"></div></div>
+                </div>
+                <div class="item">
+                    <div class="name">Slot: {{slot}} / {{dslot}}</div>
+                    <div class="i"><div class="f" style="width: {{max(0, min((slot/dslot)*100, 100))}}%"></div></div>
+                </div>
+            </div>
+
+            <div class="helper">
+                <h4>Không biết bắt đầu từ đâu?</h4>
+                <div class="btn">
+                    <button onclick="window.location='/servers'">
+                        <i class="fa-regular fa-plus"></i>
+                        Tạo máy chủ
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <div class="text">
+                <h6>
+                    <div class="icon"><i class="fa-regular fa-clock"></i></div>
+                    {{loadTime}} giây
+                </h6>
+                <h5>Copyright © 2025-{{datetime.datetime.now().strftime("%Y")}} <a href="https://github.com/mrbeeder/tbdash">Tbdash</a>.</h5>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

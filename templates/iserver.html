@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/assets/css/general.css">
+    <link rel="stylesheet" href="/assets/css/dash_css.css">
+    <link rel="stylesheet" href="/assets/css/server.css">
+    <link rel="shortcut icon" href="/assets/img/logo.png" type="image/png">
+    <script>
+        document.onreadystatechange = function() {
+            if (document.readyState == 'complete') {
+                $(".loading").fadeOut(200)
+                $("body").css("overflow-y","unset")
+                $("main").delay(300).css("animation", "showing 0.5s forwards ease-in-out");
+                document.onreadystatechange = () => {}
+            }
+        };
+    </script>
+    <script src="/assets/js/server.js"></script>
+    <script src="/assets/js/dash.js"></script>
+    <title>Máy chủ của bạn - {{name}}</title>
+</head>
+<body>
+    <div class="loading">
+        <div class="loader"></div>
+    </div>
+    <div class="nav">
+        <div class="name">
+            {{name}}
+        </div>
+        <div class="items">
+            <a onclick="sh()">
+                <div id="menuToggle" class="it">
+                    <div class="icon">
+                        <i class="fa-solid fa-bars"></i>
+                    </div>
+                    <it>Ẩn menu</it>
+                </div>
+            </a>
+            {% for i in list(mIt.keys()) %}
+            <a href="{{mIt[i]['link']}}" {% if request.path.replace('/','') == mIt[i]['link'].replace('/','') %} class="sp" {% endif %}>
+                <div class="it">
+                    <div class="icon">
+                        {{mIt[i]["icon"] | safe}}
+                    </div>
+                    <it>{{i}}</it>
+                </div>
+            </a>
+            {% endfor %}
+            <a href="/panel" target="_blank">
+                <div class="it">
+                    <div class="icon">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </div>
+                    <it>Panel</it>
+                </div>
+            </a>
+            {% if isAdmin %}
+            <a href="/admin">
+                <div class="it">
+                    <div class="icon">
+                        <i class="fa-solid fa-lock"></i>
+                    </div>
+                    <it>Quản trị</it>
+                </div>
+            </a>
+            {% endif %}
+        </div>
+        <div class="users">
+            <div class="one">
+            <h5>{{user}}</h5>
+            <h6>Xu: {{coin}}</h6>
+            </div>
+            <div class="two">
+                <button onclick="window.location='/logout'">
+                    <svg aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none"
+                        viewBox="0 0 24 24">
+                        <path fill="currentColor" d="M9 12a1 1 0 0 1 1 1v2a1 1 0 1 1-2 0v-2a1 1 0 0 1 1-1Z" class=""></path>
+                        <path fill="currentColor" fill-rule="evenodd"
+                            d="M2.75 3.02A3 3 0 0 1 5 2h10a3 3 0 0 1 3 3v7.64c0 .44-.55.7-.95.55a3 3 0 0 0-3.17 4.93l.02.03a.5.5 0 0 1-.35.85h-.05a.5.5 0 0 0-.5.5 2.5 2.5 0 0 1-3.68 2.2l-5.8-3.09A3 3 0 0 1 2 16V5a3 3 0 0 1 .76-1.98Zm1.3 1.95A.04.04 0 0 0 4 5v11c0 .36.2.68.49.86l5.77 3.08a.5.5 0 0 0 .74-.44V8.02a.5.5 0 0 0-.32-.46l-6.63-2.6Z"
+                            clip-rule="evenodd" class=""></path>
+                        <path fill="currentColor"
+                            d="M15.3 16.7a1 1 0 0 1 1.4-1.4l4.3 4.29V16a1 1 0 1 1 2 0v6a1 1 0 0 1-1 1h-6a1 1 0 1 1 0-2h3.59l-4.3-4.3Z"
+                            class=""></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="main">
+        <main>
+            <div class="title">
+                <h2>Chi tiết máy chủ</h2>
+                {% if i %}
+                <h4>Thông tin chi tiết cho {{i["identifier"]}}</h4>
+                {% endif %}
+            </div>
+            {% if error!="none" and error %}
+            <div class="err">
+                <h3>Lỗi:</h3>
+                <h4>{{error}}</h4>
+            </div>
+            {% elif error=="none" %}
+            <div class="done">
+                <h3>Tài nguyên máy chủ của bạn đã được cập nhật.</h3>
+            </div>
+            {% endif %}
+            {% if i %}
+            <div class="isv">
+                <div class="sio">
+                    <form action="edit" method="get">
+                        <h2 style="overflow-x: hidden;
+                                    text-overflow: ellipsis;">{{i["name"]}}</h2>
+                        <h6 style="margin-bottom: 15px">{{i['identifier']}}</h6>
+                        <div class="info">
+                            <h4>CPU:</h4>
+                            <div>
+                                <input type="number" min="1" max="99999" name="cpu" value='{{i["limits"]["cpu"]}}'></input><h4>%</h4>&nbsp;
+                            </div>
+                        </div>
+                        <div class="info">
+                            <h4>Ram:</h4>
+                            <div>
+                                <input type="number" min="1" max="99999" name="ram" value='{{i["limits"]["memory"]}}'></input><h4>MB</h4>
+                            </div>
+                        </div>
+                        <div class="info">
+                            <h4>Ổ cứng:</h4>
+                            <div>
+                                <input type="number" min="1" max="99999" name="disk" inputmode="numeric" value='{{i["limits"]["disk"]}}'></input><h4>MB</h4>
+                            </div>
+                        </div>
+                        <div class="info"><h4>Trạng thái:</h4><h4>{{i.get("status") if i.get("status") else "active"}}</h4></div>
+                        <div class="btn">
+                            <button type="button" class="del" onclick="del()">Xóa</button>
+                            <button>Cập nhật</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            {% endif %}
+        </main>
+        <footer>
+            <div class="text">
+                <h6>
+                    <div class="icon">
+                        <i class="fa-regular fa-clock"></i>
+                    </div>
+                    {{loadTime}}s
+                </h6>
+                <h5>Copyright © 2025-{{datetime.datetime.now().strftime("%Y")}} <a
+                        href="https://github.com/mrbeeder/tbdash">TBDash</a>.</h5>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

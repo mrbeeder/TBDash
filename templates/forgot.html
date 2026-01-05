@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/assets/css/general.css">
+    <link rel="stylesheet" href="/assets/css/verify.css">
+    <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="shortcut icon" href="/assets/img/logo.png" type="image/png">
+    <title>Xác minh tài khoản - {{name}}</title>
+</head>
+<body>
+    <main>
+        <h2 style="font-weight: 100;">Chào mừng trở lại {{name}}!</h2>
+        <h4 style="font-weight: 100;">Vui lòng nhập email của bạn bên dưới.</h4>
+        <input style="max-width: 100%" type="text" id="code" autocomplete="off" spellcheck="false" placeholder="Nhập email của bạn"><br>
+        <button onclick="sendEmail()" id="btn">Gửi email</button>
+    </main>
+
+    <script>
+        function sendEmail() {
+            let code = $("#code")
+            let btn = $("#btn")
+            let main = $("main")
+
+            if (code.val().length < 6) return
+
+            code.attr("disabled","")
+            btn.attr("disabled","")
+
+            let formData = new FormData()
+            formData.append("email", code.val())
+            main.css("animation", "border_anim 5s ease-in-out infinite")
+
+            fetch("/forgot/", {
+                method: "POST",
+                body: formData
+            })
+            .then(r => r.json())
+            .then(r => {
+                main.css("animation", "none")
+                code.removeAttr("disabled")
+                btn.removeAttr("disabled")
+
+                if (r.status != "ok") {
+                    alert("Lỗi: " + r.message)
+                } else {
+                    alert("Một email chứa mật khẩu mới đã được gửi đến hộp thư của bạn!")
+                    window.location.href = "/login"
+                }
+            })
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+{
+  "name": "TbDash",
+  "version": "1.0.1",
+  "codename": "truhosttaivietnammrbeeder",
+
+  "pterodactyl": {
+    "host": "https://domain.you/",
+    "key": "ptla_you"
+  },
+
+  "flask": {
+    "host": "localhost",
+    "port": 3001,
+    "debug": false
+  },
+
+  "mail": {
+    "smtp": {
+      "host": "smtp.gmail.com",
+      "port": 465,
+      "user": "",
+      "password": "",
+      "from": "TbPanel <mrbeeder@beedercloud.site>"
+    },
+    "verifyUser": false
+  },
+
+  "cf_turnstile": {
+    "enable": false,
+    "site_key": "",
+    "secret_key": ""
+  },
+
+  "database": "TbPanel.db",
+
+  "default": {
+    "cpu": 300,
+    "ram": 2048,
+    "disk": 5120,
+    "slot": 1,
+    "coin": 0
+  },
+
+  "eggs": {
+    "paper": {
+      "name": "Paper",
+      "info": {
+        "egg": 3,
+        "docker_image": "ghcr.io/pterodactyl/yolks:java_17",
+        "startup": "java -Xms128M -XX:MaxRAMPercentage=95.0 -jar {{SERVER_JARFILE}}",
+        "environment": {
+          "SERVER_JARFILE": "server.jar",
+          "MINECRAFT_VERSION": "latest"
+        },
+        "feature_limits": {
+          "databases": 4,
+          "backups": 4
+        }
+      }
+    }
+  },
+
+  "locations": {
+    "1": { "name": "lorem", "limit": 100 },
+    "2": { "name": "lorem1", "limit": 20 }
+  },
+
+  "afk": {
+    "enable": true,
+    "coinPerStage": 10,
+    "stageTime": 60
+  },
+
+  "store": {
+    "enable": true,
+    "cpu": [100, 100],
+    "ram": [250, 1024],
+    "disk": [200, 1024],
+    "slot": [1500, 1]
+  }
+}

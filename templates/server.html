@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/assets/css/general.css">
+    <link rel="stylesheet" href="/assets/css/dash_css.css">
+    <link rel="stylesheet" href="/assets/css/server.css">
+    <link rel="shortcut icon" href="/assets/img/logo.png" type="image/png">
+    <script>
+        document.onreadystatechange = function() {
+            if (document.readyState == 'complete') {
+                $(".loading").fadeOut(200)
+                $("body").css("overflow-y","unset")
+                $("main").delay(300).css("animation", "showing 0.5s forwards ease-in-out");
+                document.onreadystatechange = () => {}
+            }
+        };
+    </script>
+    <script src="/assets/js/server.js"></script>
+    <script src="/assets/js/dash.js"></script>
+    <title>Máy chủ của bạn - {{name}}</title>
+</head>
+<body>
+    <div class="loading">
+        <div class="loader"></div>
+    </div>
+    <div class="nav">
+        <div class="name">{{name}}</div>
+        <div class="items">
+            <a onclick="sh()">
+                <div id="menuToggle" class="it">
+                    <div class="icon">
+                        <i class="fa-solid fa-bars"></i>
+                    </div>
+                    <it>Ẩn menu</it>
+                </div>
+            </a>
+            {% for i in list(mIt.keys()) %}
+            <a href="{{mIt[i]['link']}}" {% if request.path.replace('/','') == mIt[i]['link'].replace('/','') %} class="sp" {% endif %}>
+                <div class="it">
+                    <div class="icon">{{mIt[i]["icon"] | safe}}</div>
+                    <it>{{i}}</it>
+                </div>
+            </a>
+            {% endfor %}
+            <a href="/panel" target="_blank">
+                <div class="it">
+                    <div class="icon"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+                    <it>Panel</it>
+                </div>
+            </a>
+            {% if isAdmin %}
+            <a href="/admin">
+                <div class="it">
+                    <div class="icon"><i class="fa-solid fa-lock"></i></div>
+                    <it>Quản trị</it>
+                </div>
+            </a>
+            {% endif %}
+        </div>
+        <div class="users">
+            <div class="one">
+                <h5>{{user}}</h5>
+                <h6>Xu: {{coin}}</h6>
+            </div>
+            <div class="two">
+                <button onclick="window.location='/logout'">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tạo server mới -->
+    <div class="crSp" style="display: none">
+        <div class="form">
+            <div class="ld"><div class="loader"></div></div>
+            <h2 style="margin-bottom: 10px; float: right; font-weight: 100;">
+                <a style="color: #aa0000 !important; cursor: pointer" onclick="$('.crSp').fadeToggle(100)">
+                    <i class="fa-solid fa-xmark"></i>
+                </a>
+            </h2>
+            <h2 style="margin-bottom: 10px; font-weight: 100;">Tạo máy chủ</h2>
+            <form action="/servers/create">
+                <div class="inp">
+                    <input type="text" name="name" placeholder="Tên máy chủ" required>
+                </div>
+                <div class="ann">
+                    <div class="inp"><input type="number" min="1" max="99999" maxlength="5" name="cpu" placeholder="CPU (%)" required></div>
+                    <div class="inp"><input type="number" min="1" max="99999" maxlength="5" name="ram" placeholder="RAM (MB)" required></div>
+                    <div class="inp"><input type="number" min="1" max="99999" maxlength="5" name="disk" placeholder="Ổ cứng (MB)" required></div>
+                </div>
+                <div class="inp">
+                    <select name="node">
+                        <optgroup label="_">
+                            <option value="_">Chọn node</option>
+                        </optgroup>
+                        <optgroup label="Nodes">
+                            {% for i in list(nodes.keys()) %}
+                            <option value="{{i}}">{{nodes[i]["name"]}}</option>
+                            {% endfor %}
+                        </optgroup>
+                    </select>
+                </div>
+                <div class="inp">
+                    <select name="egg">
+                        <optgroup label="_">
+                            <option value="_">Chọn Egg</option>
+                        </optgroup>
+                        <optgroup label="Eggs">
+                            {% for i in list(eggs.keys()) %}
+                            <option value="{{i}}">{{eggs[i]["name"]}}</option>
+                            {% endfor %}
+                        </optgroup>
+                    </select>
+                </div>
+                <div class="btn"><input type="submit" value="Tạo"></div>
+            </form>
+        </div>
+    </div>
+
+    <div class="main">
+        <main>
+            <div class="title">
+                <button onclick="$('.crSp').fadeToggle(100);">
+                    <i class="fa-regular fa-plus"></i> Tạo
+                </button>
+                <h2>Máy chủ</h2>
+                <h4>Máy chủ của bạn sẽ xuất hiện ở đây!</h4>
+            </div>
+            {% if error!="none" and error %}
+            <div class="err">
+                <h3>Lỗi khi tạo:</h3>
+                <h4>{{error}}</h4>
+            </div>
+            {% elif error=="none" %}
+            <div class="done">
+                <h3>Máy chủ của bạn đã được tạo.</h3>
+            </div>
+            {% endif %}
+            <div class="sv">
+                {% for i in sv %}
+                <div class="sio">
+                    <h2 style="overflow-x: hidden; text-overflow: ellipsis;">{{i["name"]}}</h2>
+                    <h6>{{i['identifier']}}</h6>
+                    <div class="info" style="margin-top: 5px"><h4>CPU:</h4><h4>{{i["limits"]["cpu"]}}%</h4></div>
+                    <div class="info" style="margin-top: 5px"><h4>RAM:</h4><h4>{{i["limits"]["memory"]}}MB</h4></div>
+                    <div class="info" style="margin-top: 5px"><h4>Ổ cứng:</h4><h4>{{i["limits"]["disk"]}}MB</h4></div>
+                    <div class="info" style="margin-top: 5px"><h4>Trạng thái:</h4><h4>{{i.get("status") if i.get("status") else "active"}}</h4></div>
+                    <div class="btn">
+                        <a href="/panel/{{i['identifier']}}" target="_blank"><button>Panel</button></a>
+                        <a href="/server/{{i['identifier']}}"><button>Quản lý</button></a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </main>
+        <footer>
+            <div class="text">
+                <h6><div class="icon"><i class="fa-regular fa-clock"></i></div>{{loadTime}}s</h6>
+                <h5>Copyright © 2025-{{datetime.datetime.now().strftime("%Y")}} <a href="https://github.com/mrbeeder/tbdash">TBDash</a>.</h5>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
